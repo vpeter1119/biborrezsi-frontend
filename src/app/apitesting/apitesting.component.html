@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Let's make an API request to restcountries.eu!
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (submit)="onSubmit(apiForm)" #apiForm="ngForm">
+  <mat-form-field>
+    <input 
+    matInput
+    name="country"
+    ngModel
+    placeholder="Country"
+    required
+    type="text"
+    min="0"
+    max="100"
+    autocomplete="off"
+    #country="ngModel"
+    [matAutocomplete]="auto">
+    <mat-error *ngIf="countryError">Ez az ország nem létezik. Kérlek, válaszd ki a listáról!</mat-error>
+    <mat-error *ngIf="country.invalid">Kérlek, írj be egy országot!</mat-error>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    </mat-form-field>    
+    <button 
+    mat-raised-button
+    color="accent"
+    class="button-send">
+    Send
+    </button>
+  </form>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      The requested country
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p *ngIf="!reqCountry">No country requested.</p>
+    <p *ngIf="reqCountry">Name: {{ reqCountry.name }}</p>
+    <p *ngIf="reqCountry">Capital: {{ reqCountry.capital }}</p>
+  </mat-card-content>
+</mat-card>

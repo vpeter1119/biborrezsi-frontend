@@ -1,0 +1,7 @@
+/* Add application styles & imports to this file! */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+mat-card {
+  margin-top: 15px;
+  width: 350px;
+}
