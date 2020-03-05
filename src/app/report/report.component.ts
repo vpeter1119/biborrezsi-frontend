@@ -18,12 +18,14 @@ export class ReportComponent implements OnInit, OnDestroy {
   reportMode = 'input';
   authenticated = false;
   url = '';
-  heatStay = false;
   newReport = {};
   allReports = [];
   allReportsSub: Subscription;
   oldReport = {};
   diffData = {};
+
+  reportPeriods = ["Augusztus, 2019","Szeptember, 2019","Október, 2019","November, 2019","December, 2019","Január, 2020","Február, 2020","Március, 2020","Április, 2020","Május, 2020","Június, 2020","Július, 2020","Augsuztus, 2020"];
+  currentReportPeriod = "";
 
   constructor(
     public _router: Router,
@@ -48,6 +50,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     .subscribe(reports => {
       this.allReports = reports;
       this.oldReport = this.allReports[(this.allReports.length - 1)];
+      this.currentReportPeriod = this.reportPeriods[(this.oldReport.nr)+1];
       console.warn("Report component initiated.");
       this.mainApp.switchLoading(false);
     });
@@ -69,20 +72,17 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   calculateDiff() {
+    var heatDiff;
+    if (this.reportForm.value.heat == 0) {
+      heatDiff = 0;
+    } else {
+      heatDiff = this.reportForm.value.heat;
+    }
     this.diffData = {
       cold: ((this.reportForm.value.cold - this.oldReport.cold).toFixed(3)),
       hot: ((this.reportForm.value.hot - this.oldReport.hot).toFixed(3)),
-      heat: (this.reportForm.value.heat - this.oldReport.heat),
+      heat: heatDiff,
       elec: (this.reportForm.value.elec - this.oldReport.elec),
-    }
-  }
-
-  switchHeatStay() {
-    this.heatStay = !this.heatStay;
-    if (this.heatStay) {
-      this.reportForm.controls.heat.disable();
-    } else {
-      this.reportForm.controls.heat.enable();
     }
   }
 
