@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 
 import { AuthService } from './auth.service';
-import { AppComponent } from '../app.component';
+import { LoadingService } from '../common_services/loading.service';
 
 @Component({
   selector: 'app-auth',
@@ -15,12 +15,11 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private mainApp: AppComponent,
+    private _loading: LoadingService
     ) { }
 
   ngOnInit() {
-    this.authService.getServerStatus();
-    this.mainApp.switchLoading(false);
+    this._loading.getServerStatus();
   }
 
   onLogin(form: NgForm) {    
@@ -30,7 +29,7 @@ export class AuthComponent implements OnInit {
     } else {
       this.authService.login("user", form.value.password);
     }
-    this.mainApp.switchLoading(true);
+    this._loading.switchLoading(true);
     form.resetForm();
   }
 

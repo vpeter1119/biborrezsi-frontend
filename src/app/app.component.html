@@ -1,6 +1,11 @@
-<div class="container" [hidden]="!isLoading">
+<div class="container" [hidden]="!isLoading" *ngIf="serverIsUp">
   <mat-spinner></mat-spinner>
 </div>
-<div fxLayout="row" [hidden]="isLoading">
+<div fxLayout="row" [hidden]="isLoading" *ngIf="serverIsUp">
   <router-outlet></router-outlet>
+</div>
+<div class="container" *ngIf="!serverIsUp">
+  <mat-card>
+    <app-server-down></app-server-down>
+  </mat-card>
 </div>

@@ -29,6 +29,8 @@ import { ApitestingComponent } from './apitesting/apitesting.component';
 import { ReportService } from './report/report.service';
 import { AuthGuard } from "./auth/auth-guard";
 import { IconsService } from './common_services/icons.service';
+import { LoadingService } from './common_services/loading.service';
+import { ServerDownComponent } from './server-down/server-down.component';
 
 const appRoutes: Routes = [
   { 
@@ -75,7 +77,7 @@ const appRoutes: Routes = [
     AppComponent, 
     ReportComponent, 
     AuthComponent, 
-    ApitestingComponent,  
+    ApitestingComponent, ServerDownComponent,  
     ],
   bootstrap:    [ 
     AppComponent 
@@ -85,6 +87,7 @@ const appRoutes: Routes = [
     ReportService,
     AuthGuard,
     IconsService,
+    LoadingService,
   ]
 })
 export class AppModule { }

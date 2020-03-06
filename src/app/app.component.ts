@@ -1,15 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoadingService } from './common_services/loading.service';
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
-export class AppComponent  {
+export class AppComponent implements OnInit  {
   isLoading: boolean;
+  serverIsUp = true;
+  serverStatusSub: Subscription;
 
-  public switchLoading(b: boolean) {
-    console.warn("Switching isLoading to " + b);
-    this.isLoading = b;
+  constructor(
+    private _loading: LoadingService,
+  ) {}
+
+  ngOnInit(){
+    this.isLoading = true;
+    this.serverStatusSub = this._loading.getServerStatusListener()
+    .subscribe(running => {
+      this.serverIsUp = running;
+      this.isLoading = false;
+    }, err => {
+      this.serverIsUp = false;
+      this.isLoading = false;
+    });
   }
+
 }
+;

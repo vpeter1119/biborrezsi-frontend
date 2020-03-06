@@ -21,20 +21,7 @@ export class AuthService {
     private _router: Router,
   ) {}
 
-  getServerStatus() { //pings the server to wake up
-    var url = (this.apiUrl + "status");
-    this._http.get<{running:boolean}>(url)
-    .subscribe(status => {
-      if (status.running) {
-        console.warn("Server is up.");
-      }
-    }, error => {
-      console.warn(error);
-      //in this case, we should also disable the frontend functions and display a message that server is down
-    });
-  }
-
-  getToken() {
+    getToken() {
     return this.token;
   }
 
@@ -75,7 +62,8 @@ export class AuthService {
     }, error => {
       //Handle failed login attempt
       console.warn("Failed login attempt.");
-      this.errorMessage = error.error.message;
+      console.warn(error);
+      this.errorMessage = error.statusText;
       this.errorMessageListener.next(this.errorMessage);      
       window.alert(this.errorMessage);
       this._router.navigate(["auth"]);
