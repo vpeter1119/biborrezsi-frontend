@@ -37,10 +37,10 @@ const appRoutes: Routes = [
   // { path: 'history',      component: ReportHistoryComponent },  
   { 
     path: '',
-    redirectTo: '/auth',
+    redirectTo: 'report',
     pathMatch: 'full'
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'auth' }
 ];
 
 @NgModule({
