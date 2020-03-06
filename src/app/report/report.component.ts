@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { ReportService } from './report.service';
 import { IconsService } from '../common_services/icons.service';
-import { AppComponent } from '../app.component';
+import { LoadingService } from '../common_services/loading.service';
 
 @Component({
   selector: 'app-report',
@@ -37,7 +37,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     private _icons: IconsService,
     private http: HttpClient,
     private _fb: FormBuilder,
-    private mainApp: AppComponent,
+    private _loading: LoadingService,
     ) {
       this.icons = this._icons.getIcons();
      }
@@ -58,7 +58,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       this.oldReport = this.allReports[(this.allReports.length - 1)];
       this.currentReportPeriod = this.reportPeriods[(this.oldReport.nr)+1];
       console.warn("Report component initiated.");
-      this.mainApp.switchLoading(false);
+      this._loading.switchLoading(false);
     });
   }
 
@@ -73,16 +73,19 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   onReport() {
+    this._loading.switchLoading(true);
     console.warn('Making POST request to: ' + this.url);
     this._report.postReportListener(this.reportForm.value)
     .subscribe(res => {
       console.warn(res.message);
       if (res) {
         this.reportMode = 'finished';
+        this._loading.switchLoading(false);
       }
     }, err => {
       if (err) {
         console.warn(err);
+        this._loading.switchLoading(false);
       }
     });
   }

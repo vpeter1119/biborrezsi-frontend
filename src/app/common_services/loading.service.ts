@@ -8,6 +8,7 @@ export class LoadingService {
   apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
 
   isLoading: boolean;
+  loadingStatusListener = new Subject<boolean>();
   serverIsUp: boolean = false;
   serverStatusListener = new Subject<boolean>();
 
@@ -17,6 +18,11 @@ export class LoadingService {
 
   switchLoading(b: boolean) {
     this.isLoading = b;
+    this.loadingStatusListener.next(this.isLoading);
+  }
+
+  getLoadingStatus() {
+    return this.loadingStatusListener.asObservable();
   }
 
   getServerStatus() { //pings the server to wake up

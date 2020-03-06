@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs'
 })
 export class AppComponent implements OnInit  {
   isLoading: boolean;
+  loadingSub: Subscription;
   serverIsUp = true;
   serverStatusSub: Subscription;
 
@@ -25,6 +26,10 @@ export class AppComponent implements OnInit  {
     }, err => {
       this.serverIsUp = false;
       this.isLoading = false;
+    });
+    this.loadingSub = this._loading.getLoadingStatus()
+    .subscribe(status => {
+      this.isLoading = status;
     });
   }
 
