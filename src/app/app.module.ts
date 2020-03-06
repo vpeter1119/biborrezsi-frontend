@@ -24,17 +24,23 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ApitestingComponent } from './apitesting/apitesting.component';
 import { ReportService } from './report/report.service';
+import { AuthGuard } from "./auth/auth-guard";
 
 const appRoutes: Routes = [
-  { path: 'report', component: ReportComponent },
+  { 
+    path: 'report', 
+    component: ReportComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'auth', component: AuthComponent },
   { path: 'testing', component: ApitestingComponent },
   // { path: 'history',      component: ReportHistoryComponent },  
-  { path: '',
+  { 
+    path: '',
     redirectTo: '/auth',
     pathMatch: 'full'
   },
-  // { path: '**', component: PageNotFoundComponent }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -69,7 +75,8 @@ const appRoutes: Routes = [
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    ReportService
+    ReportService,
+    AuthGuard,
   ]
 })
 export class AppModule { }

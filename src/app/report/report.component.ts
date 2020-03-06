@@ -68,7 +68,22 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   onReport() {
     console.warn('Making POST request to: ' + this.url);
-    this._report.postReport(this.reportForm.value);
+    this._report.postReportListener(this.reportForm.value)
+    .subscribe(res => {
+      console.warn(res.message);
+      if (res) {
+        this.reportMode = 'finished';
+      }
+    }, err => {
+      if (err) {
+        console.warn(err);
+      }
+    });
+  }
+
+  resetAll() {
+    this.reportMode = 'input';
+    this.reportForm.reset();
   }
 
   calculateDiff() {

@@ -10,6 +10,7 @@ export class ReportService {
   apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
   previousReports = [];
   previousReportsSubject = new Subject();
+  postReportResponse = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -19,16 +20,21 @@ export class ReportService {
   postReport(data) {
     var url = this.apiUrl + 'reports';
     console.warn('Sending POST request to: ' + url);
-    this.http.post<{message: string, report: any, errcode: string}>(url, data)
+    this.http.post<{message: string, errcode: string}>(url, data)
     .subscribe(response => {
       console.warn('Response from server: ' + response.message);
-      console.warn(response.report);
       window.alert(response.message);
+      this.postReportResponse.next(response);
       //window.location.href = 'https://www.youtube.com/watch?v=Jt061BAbkQs';
     }, error => {
       console.warn(error);
       window.alert(error.error.message);
     });
+  }
+
+  postReportListener(data) {
+    this.postReport(data);
+    return this.postReportResponse.asObservable();
   }
 
   getAllReports() {

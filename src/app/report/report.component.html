@@ -105,6 +105,12 @@
               <!-- some more rows for all the data -->
             </table>
           </mat-card-content>
+          <mat-card-content *ngIf="reportMode=='finished'">
+            <p>Óraállások elküldve!</p>
+            <p>A jóváhagyásról emailben értesítést fogsz kapni.</p>
+            <button mat-raised-button color="accent"
+            (click)="resetAll()">Vissza</button>
+          </mat-card-content>
           <mat-card-actions *ngIf="reportMode=='confirm'">
             <button mat-raised-button color="primary"
             (click)="onReport()">Küldés</button>
@@ -115,5 +121,5 @@
       </div>
     </div>    
   </div>
-  Előző óraláás: {{ oldReport | json }}
+  Előző óraállás: {{ oldReport | json }}
 </div>
