@@ -15,9 +15,12 @@ import {
   MatButtonModule,
   MatTableModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatIconModule,
   } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { ReportComponent } from './report/report.component';
 import { AuthComponent } from './auth/auth.component';
@@ -25,6 +28,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ApitestingComponent } from './apitesting/apitesting.component';
 import { ReportService } from './report/report.service';
 import { AuthGuard } from "./auth/auth-guard";
+import { IconsService } from './common_services/icons.service';
 
 const appRoutes: Routes = [
   { 
@@ -62,7 +66,10 @@ const appRoutes: Routes = [
     MatTableModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    MatTooltipModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    FontAwesomeModule
     ],
   declarations: [ 
     AppComponent, 
@@ -77,6 +84,7 @@ const appRoutes: Routes = [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ReportService,
     AuthGuard,
+    IconsService,
   ]
 })
 export class AppModule { }

@@ -61,7 +61,7 @@
                 autocomplete="off"
                 formControlName="heat"
                 [disabled]="heatStay">
-              </mat-form-field><span title="Ha változatlan, hagyd üresen, vagy írj be nullát!">[?]</span>
+              </mat-form-field><span matTooltip="Ha változatlan, hagyd üresen, vagy írj be nullát!">  <fa-icon [icon]="icons.question"></fa-icon></span>
               <mat-form-field class="">
                 <input
                 matInput
@@ -113,7 +113,7 @@
           </mat-card-content>
           <mat-card-actions *ngIf="reportMode=='confirm'">
             <button mat-raised-button color="primary"
-            (click)="onReport()">Küldés</button>
+            (click)="onReport()" [disabled]="!diffIsValid">Küldés</button>
             <button mat-raised-button color="accent"
             (click)="reportMode='input'">Szerkesztés</button>
           </mat-card-actions>

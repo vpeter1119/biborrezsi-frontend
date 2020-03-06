@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { ReportService } from './report.service';
+import { IconsService } from '../common_services/icons.service';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -23,6 +24,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   allReportsSub: Subscription;
   oldReport = {};
   diffData = {};
+  diffIsValid = false;
+  icons = {};
 
   reportPeriods = ["Augusztus, 2019","Szeptember, 2019","Október, 2019","November, 2019","December, 2019","Január, 2020","Február, 2020","Március, 2020","Április, 2020","Május, 2020","Június, 2020","Július, 2020","Augsuztus, 2020"];
   currentReportPeriod = "";
@@ -31,10 +34,13 @@ export class ReportComponent implements OnInit, OnDestroy {
     public _router: Router,
     private _auth: AuthService,
     private _report: ReportService,
+    private _icons: IconsService,
     private http: HttpClient,
     private _fb: FormBuilder,
     private mainApp: AppComponent,
-    ) { }
+    ) {
+      this.icons = this._icons.getIcons();
+     }
 
   reportForm = this._fb.group({
     cold: [null,Validators.required],
@@ -87,6 +93,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   calculateDiff() {
+    this.diffIsValid = false;
     var heatDiff;
     if (this.reportForm.value.heat == 0) {
       heatDiff = 0;
@@ -98,6 +105,9 @@ export class ReportComponent implements OnInit, OnDestroy {
       hot: ((this.reportForm.value.hot - this.oldReport.hot).toFixed(3)),
       heat: heatDiff,
       elec: (this.reportForm.value.elec - this.oldReport.elec),
+    }
+    if (this.diffData.cold >= 0) {
+      this.diffIsValid = true;
     }
   }
 
