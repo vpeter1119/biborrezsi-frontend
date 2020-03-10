@@ -1,5 +1,8 @@
 <div class="container" [hidden]="!isLoading" *ngIf="serverIsUp">
-  <mat-spinner></mat-spinner>
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+    <p class="loading-text">Kis türelmet.<br> Az oldal hamarosan betöltődik.</p>
+  </div>
 </div>
 <div fxLayout="row" [hidden]="isLoading" *ngIf="serverIsUp">
   <router-outlet></router-outlet>

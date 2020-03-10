@@ -1,7 +1,21 @@
 p {
-  font-family: Lato;
+  font-family: Roboto;
 }
 
 mat-card {
-  width: 350px;
+  width: 300px;
+}
+
+.loading-spinner {
+  width: 300px;
+  align-content: center;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+.loading-text {
+  margin-top: 10px;
+  text-align: center;
 }
