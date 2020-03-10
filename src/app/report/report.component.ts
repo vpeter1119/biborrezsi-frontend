@@ -101,7 +101,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     if (this.reportForm.value.heat == 0) {
       heatDiff = 0;
     } else {
-      heatDiff = this.reportForm.value.heat;
+      heatDiff = (this.reportForm.value.heat - this.oldReport.heat)
     }
     this.diffData = {
       cold: ((this.reportForm.value.cold - this.oldReport.cold).toFixed(3)),
