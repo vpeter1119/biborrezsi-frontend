@@ -4,6 +4,7 @@ p {
 
 mat-card {
   width: 300px;
+  background-color: #f5fcc1;
 }
 
 .loading-spinner {
