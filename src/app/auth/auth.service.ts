@@ -58,15 +58,22 @@ export class AuthService {
         const expirationDate = new Date(now.getTime() + expiresInDuration * 100000);
         this.saveAuthData(this.token, expirationDate);
         this._router.navigate(["report"]);
+        return true;
       }
     }, error => {
       //Handle failed login attempt
       console.warn("Failed login attempt.");
       console.warn(error);
-      this.errorMessage = error.statusText;
+      if (error.error != null) {
+        this.errorMessage = error.error.message;
+      } else {
+        this.errorMessage = error.statusText;
+      }
+      this.errorMessage = error.error.message;
       this.errorMessageListener.next(this.errorMessage);      
       window.alert(this.errorMessage);
-      this._router.navigate(["auth"]);
+      //this._router.navigate(["auth"]);
+      return false;
     });
   }
 

@@ -27,7 +27,24 @@ export class AuthComponent implements OnInit {
       window.alert("Hibás kitöltés!")
       return;
     } else {
-      this.authService.login("user", form.value.password);
+      this._loading.switchLoading(true);
+      var loginCompleted = new Promise((resolve, reject) => {
+        var loginOk = this.authService.login("user", form.value.password);
+        setTimeout(()=>{
+          resolve(loginOk);
+        },300);
+      });
+      loginCompleted.then(loginOk => {
+        if (loginOk) {
+          console.warn("Login OK.");
+          this.router.navigate(["report"]);
+        } else {
+          console.warn("Login failed.");
+          this._loading.switchLoading(false);
+        }
+      });
+      
+
     }
     this._loading.switchLoading(true);
     form.resetForm();
