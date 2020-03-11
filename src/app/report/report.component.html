@@ -61,7 +61,7 @@
                 autocomplete="off"
                 formControlName="heat"
                 [disabled]="heatStay">
-              </mat-form-field><span matTooltip="Ha változatlan, hagyd üresen, vagy írj be nullát!">  <fa-icon [icon]="icons.question"></fa-icon></span>
+              </mat-form-field><span #tooltip="matTooltip" matTooltip="Ha változatlan, hagyd üresen, vagy írj be nullát!" (click)="tooltip.toggle()">  <fa-icon [icon]="icons.question"></fa-icon></span>
               <mat-form-field class="">
                 <input
                 matInput

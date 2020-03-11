@@ -114,4 +114,8 @@ export class ReportComponent implements OnInit, OnDestroy {
     }
   }
 
+  showTooltip(id) {
+    
+  }
+
 }
