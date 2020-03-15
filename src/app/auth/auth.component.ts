@@ -29,10 +29,12 @@ export class AuthComponent implements OnInit {
     } else {
       this._loading.switchLoading(true);
       var loginCompleted = new Promise((resolve, reject) => {
-        var loginOk = this.authService.login("user", form.value.password);
+        this.authService.login("user", form.value.password);
         setTimeout(()=>{
+          var loginOk = this.authService.getAuthStatus();
+          console.warn(loginOk);
           resolve(loginOk);
-        },300);
+        },1000);
       });
       loginCompleted.then(loginOk => {
         if (loginOk) {

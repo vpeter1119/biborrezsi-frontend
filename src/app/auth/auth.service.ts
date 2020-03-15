@@ -42,6 +42,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
+    this.logout();
     const authData = {username: username, pw: password};
     const url = (this.apiUrl + "auth/login");
     this._http.post<{token: string, expiresIn: number, message: string, errcode: string}>(url, authData)
@@ -58,22 +59,28 @@ export class AuthService {
         const expirationDate = new Date(now.getTime() + expiresInDuration * 100000);
         this.saveAuthData(this.token, expirationDate);
         this._router.navigate(["report"]);
-        return true;
+        //console.warn("Auth service login() returning true.");
+        //return true;
       }
     }, error => {
       //Handle failed login attempt
-      console.warn("Failed login attempt.");
-      console.warn(error);
-      if (error.error != null) {
+      if (error) {
+        console.warn("Failed login attempt.");
+        console.warn(error);
+        if (error.error != null) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = error.statusText;
+        }        
         this.errorMessage = error.error.message;
-      } else {
-        this.errorMessage = error.statusText;
+        this.errorMessageListener.next(this.errorMessage);      
+        this.authStatus = false;
+        this.authStatusListener.next(false);
+        window.alert(this.errorMessage);
+        //this._router.navigate(["auth"]);
+        //console.warn("Auth service login() returning false.");
+        //return false;
       }
-      this.errorMessage = error.error.message;
-      this.errorMessageListener.next(this.errorMessage);      
-      window.alert(this.errorMessage);
-      //this._router.navigate(["auth"]);
-      return false;
     });
   }
 

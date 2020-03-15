@@ -51,6 +51,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit() {
+    this._loading.switchLoading(true);
     this.authenticated = this._auth.authStatus;
     this.allReportsSub = this._report.getAllReportsListener()
     .subscribe(reports => {
