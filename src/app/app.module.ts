@@ -31,6 +31,7 @@ import { AuthGuard } from "./auth/auth-guard";
 import { IconsService } from './common_services/icons.service';
 import { LoadingService } from './common_services/loading.service';
 import { ServerDownComponent } from './server-down/server-down.component';
+import { FooterComponent } from './footer/footer.component';
 
 const appRoutes: Routes = [
   { 
@@ -77,7 +78,7 @@ const appRoutes: Routes = [
     AppComponent, 
     ReportComponent, 
     AuthComponent, 
-    ApitestingComponent, ServerDownComponent,  
+    ApitestingComponent, ServerDownComponent, FooterComponent,  
     ],
   bootstrap:    [ 
     AppComponent 
