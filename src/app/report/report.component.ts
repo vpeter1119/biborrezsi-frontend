@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import moment from 'moment';
+moment.defineLocale('en-hu', {
+  parentLocale: 'en',
+  months: ["Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"]
+});
+moment.locale('en-hu');
 
 import { AuthService } from '../auth/auth.service';
 import { ReportService } from './report.service';
@@ -26,8 +32,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   diffData = {};
   diffIsValid = false;
   icons = {};
-
-  reportPeriods = ["Augusztus, 2019","Szeptember, 2019","Október, 2019","November, 2019","December, 2019","Január, 2020","Február, 2020","Március, 2020","Április, 2020","Május, 2020","Június, 2020","Július, 2020","Augsuztus, 2020"];
+  startingDate = moment([2019,7]);
+  currentReportPeriodIndex = 0;
   currentReportPeriod = "";
 
   constructor(
@@ -57,7 +63,8 @@ export class ReportComponent implements OnInit, OnDestroy {
     .subscribe(reports => {
       this.allReports = reports;
       this.oldReport = this.allReports[(this.allReports.length - 1)];
-      this.currentReportPeriod = this.reportPeriods[(this.oldReport.nr)+1];
+      this.currentReportPeriodIndex = this.oldReport.nr+1;
+      this.currentReportPeriod = this.startingDate.add(this.currentReportPeriodIndex, 'months').format("MMMM, YYYY");
       console.warn("Report component initiated.");
       this._loading.switchLoading(false);
     });
