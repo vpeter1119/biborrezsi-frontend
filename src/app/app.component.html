@@ -12,6 +12,6 @@
     <app-server-down></app-server-down>
   </mat-card>
 </div>
-<div class="footer container">
+<div class="footer container" [hidden]="isLoading" *ngIf="serverIsUp">
   <app-footer></app-footer>
 </div>

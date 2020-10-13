@@ -21,6 +21,10 @@ mat-spinner {
   text-align: center;
 }
 
+.loading-spinner {
+  margin-top: 10px;
+}
+
 .footer {
   margin-top: 20px;
 }
