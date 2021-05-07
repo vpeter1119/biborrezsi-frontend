@@ -5,7 +5,8 @@ import { Subject} from 'rxjs';
 @Injectable({providedIn: "root"})
 export class LoadingService {
 
-  apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
+  //apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
+  apiUrl = 'https://petervertesi.com/dev-server/api/';
 
   isLoading: boolean;
   loadingStatusListener = new Subject<boolean>();

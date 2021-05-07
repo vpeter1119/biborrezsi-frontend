@@ -6,8 +6,8 @@ import { Subject } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class AuthService {
   
-  //apiUrl = 'https://br-server-staging.herokuapp.com/api/';
-  apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
+  //apiUrl = 'https://biborrezsi-server.herokuapp.com/api/';
+  apiUrl = 'https://petervertesi.com/dev-server/api/';
   
   private token: string;
   private tokenTimer: any;
